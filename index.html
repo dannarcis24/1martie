@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>te pwp</title>
+    <link rel="icon" type="png" href="martisor_icon.png"> 
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?spring,flowers') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            display: grid;
+            grid-template-rows: auto auto;
+            gap: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .spring-button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .spring-button:hover {
+            background-color: #ff758f;
+        }
+        .message-box {
+            background: rgba(255, 255, 255, 0.8);
+            color: #ff4d6d;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1.5rem;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: explode 1.5s ease-out forwards;
+        }
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5) translate(var(--x-dir), var(--y-dir));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="martisor_icon.png" width="100" height="100">
+        <button class="spring-button" onclick="showMessage()">Afișează mesajul</button>
+        <div class="message-box hidden" id="message"></div>
+    </div>
+    <script>
+        const messages = [
+            "Un Mărțișor plin de dragoste și bucurie! ❤️",
+            "Fie ca primăvara să îți umple sufletul cu lumină! 🌸",
+            "Ai cumva un Mărțișor special pentru mine sau trebuie să mă mulțumesc doar cu zâmbetul tau? 😏",
+            "Ești minunată, așa că meriți o primăvară de vis! ☀️",
+            "O fata frumoasa merita o surpriza speciala! 🌹",
+            "Să ai parte de fericire și iubire în fiecare zi! 💕",
+            "Un Mărțișor simbolic pentru o persoană specială! 🌷",
+            "Să ai o primăvară plină de zâmbete și momente frumoase! 😊",
+            "Fie ca fiecare zi să îți aducă raze de soare și bucurie! 🌞",
+            "Se pare că primăvara a venit mai devreme, pentru că tu ai adus toată căldura și frumusețea aici! 🌸",
+            "Îți doresc un anotimp colorat și plin de împliniri! 🌼",
+            "Mărțișorul acesta să-ți amintească cât de prețioasă ești! 💖",
+            "Cu dragoste și gânduri bune, să ai o primăvară magică! ✨",
+            "Dacă frumusețea ta ar fi un anotimp, cu siguranță ar fi primăvara... și cred că tocmai mi-ai înflorit inima! 💖"
+        ];
+        let currentIndex = 0;
+
+        function showMessage() {
+            const messageBox = document.getElementById("message");
+            messageBox.textContent = messages[currentIndex];
+            messageBox.classList.remove("hidden");
+            currentIndex = (currentIndex + 1) % messages.length;
+        }
+
+        document.body.addEventListener('click', function(event) {
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                document.body.appendChild(heart);
+                
+                let angle = (Math.PI * 2 / 10) * i;
+                let distance = Math.random() * 100 + 50;
+                
+                heart.style.setProperty('--x-dir', `${Math.cos(angle) * distance}px`);
+                heart.style.setProperty('--y-dir', `${Math.sin(angle) * distance}px`);
+                
+                heart.style.left = `${event.clientX}px`;
+                heart.style.top = `${event.clientY}px`;
+                
+                setTimeout(() => heart.remove(), 1500);
+            }
+        });
+    </script>
+</body>
+</html>
